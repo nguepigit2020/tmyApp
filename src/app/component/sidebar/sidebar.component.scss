@@ -1,0 +1,38 @@
+:host {
+    .mat-icon {
+      vertical-align: middle;
+      margin-right: 25px;
+    }
+  }
+  
+  .mat-list-item {
+    font-size: 16px;
+    height: 44px !important;
+    margin-bottom: 4px;
+    &:hover {
+      color: #f2f5f7 !important;
+    }
+    ::ng-deep {
+      .mat-list-item-content {
+        border-radius: 5px;
+        margin: 0 8px;
+        &:hover {
+          background: #ff9200 !important;
+        }
+      }
+    }
+  }
+  
+  
+  .profile-card {
+    text-align: center;
+    padding: 0px,10px,10px,10px;
+    img {
+      width: 60px;
+      height: 100px;
+      object-fit: cover;
+      border-radius: 0%;
+    }
+    
+    }
+

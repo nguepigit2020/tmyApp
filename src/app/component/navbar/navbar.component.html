@@ -1,0 +1,33 @@
+<mat-toolbar >
+    <mat-toolbar-row class="justify-content-between">
+      <button mat-icon-button (click)="toggleSidebar()">
+        <mat-icon>menu</mat-icon>
+      </button>
+      <!-- <div class="row mr-2 ml-auto"> -->
+        <ul class="align-items-center">
+          <li>
+            <button mat-button [matMenuTriggerFor]="menu" class="user mt-2 d-flex align-items-center">
+            <mat-icon>account_circle</mat-icon></button>
+            <mat-menu  #menu="matMenu">
+              <div  class="mat-menu-autosize" style="min-width: 200px;">
+                <img [src]=avatar_piture width="60" height="60" class="rounded-circle mx-auto p-0 d-block" alt="">
+                <div class="row justify-content-center mx-2 p-2 text-secondary font-weight-bold">
+                  {{userEmail}}
+                </div>
+              </div>
+              <mat-divider></mat-divider>
+                <button routerLink="/home/setting" mat-menu-item>
+                  <mat-icon>settings</mat-icon>
+                  Settings
+                </button>
+                <mat-divider></mat-divider>
+              <button mat-menu-item (click)="onlogOut()" >
+                 <mat-icon>exit_to_app</mat-icon>
+                Logout
+              </button>
+            </mat-menu>
+          </li>
+        </ul>
+      <!-- </div> -->
+    </mat-toolbar-row>
+  </mat-toolbar>
