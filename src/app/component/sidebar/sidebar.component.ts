@@ -6,6 +6,6 @@ import { Component } from '@angular/core';
   styleUrls: ['./sidebar.component.scss']
 })
 export class SidebarComponent {
-  logo_piture:string="assets/images/rsz_logo.png";
+  logo_piture:string="assets/images/logo2.png";
 
 }

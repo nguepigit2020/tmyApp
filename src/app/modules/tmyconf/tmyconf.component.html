@@ -1,6 +1,6 @@
 <div class="container-fluid">
   <div class="card">
-    <div class="card-header card-header-danger">
+    <div class="card-header blue-lucisun">
       <div style="text-align: center;">
         <h1 class="card-title ">TMY Configuration List</h1>
         <p class="card-category"></p>
@@ -10,7 +10,7 @@
       <div class="mb-2 row">
         <div class="col-3">
           <span class="input-group-btn ">
-            <button class="btn btn-sm violet-lba p-2" (click)="open(content)">
+            <button class="btn btn-sm green-lucisun p-2" (click)="open(content)">
               <mat-icon>settings</mat-icon> New Configuration</button>
           </span>
         </div>
@@ -48,21 +48,21 @@
             <td><span>{{tmyconf.pv_system.tracker!=null?tmyconf.pv_system.tracker.description:""}}</span></td>
             <td>
               <div class="example-button-container ">
-                <button mat-mini-fab class="btn-info" (click)="openProfil(contentProfil, tmyconf)">
+                <button mat-mini-fab class="blue-lucisun" (click)="openProfil(contentProfil, tmyconf)">
                   <mat-icon>visibility</mat-icon>
                 </button>
               </div>
             </td>
             <td>
               <div class="example-button-container ">
-                <button mat-mini-fab class="btn-success" (click)="openEdit(contentEdit, tmyconf)">
+                <button mat-mini-fab class="yello-lucisun" (click)="openEdit(contentEdit, tmyconf)">
                   <mat-icon>edit</mat-icon>
                 </button>
               </div>
             </td>
             <td>
               <div class="example-button-container ">
-                <button mat-mini-fab class="btn-danger" (click)="onDownloadConfiguration(tmyconf)">
+                <button mat-mini-fab class="green-lucisun" (click)="onDownloadConfiguration(tmyconf)">
                   <mat-icon>download</mat-icon>
                 </button>
               </div>
