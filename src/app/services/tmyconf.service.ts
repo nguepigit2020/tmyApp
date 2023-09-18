@@ -38,17 +38,17 @@ export class TmyconfService {
   }
   
   postTmyConf(data:any){
-    return this.http.post<any[]>(this.baseUrl+"create/configuration", data, this.httpOptions);
+    return this.http.post<any>(this.baseUrl+"create/configuration", data, this.httpOptions);
   }
   
   
   upDateTmyConf(editForm: any){
-    console.log(editForm.value.id)
-    return this.http.post<any[]>(this.baseUrl+"update/configuration/"+editForm.value.id, editForm, this.httpOptions);
+    return this.http.post<any>(this.baseUrl+"update/configuration/"+editForm.id, editForm, this.httpOptions);
   }
 
-  downloadTmyConf(id:any){
-    return this.http.get<any>(this.baseUrl+"download_yaml/configuration/"+id, this.httpOptions)
+  
+  downloadFileTmyConf(id: number): Observable<Blob> {
+    return this.http.get(this.baseUrl+"download_yaml/configuration/"+id, { responseType: 'blob' });
   }
   
   

@@ -255,19 +255,37 @@ export class TmyconfComponent implements OnInit {
           })
       }
 
+  getCurrentDateTime(): string {
+    const currentDateTime = new Date();
+    return currentDateTime.toISOString(); // Or format the date as per your requirement
+  }    
+
   //This method is use to fetch the data from the API    
   OnGetAllConfigurations(){
     this.serviceTmyconf.getAllTmyConf().subscribe((data:any)=>{
-      //this.tmyConfigurationList = data;
+      this.tmyConfigurationList = data;
       console.log(this.tmyConfigurationList)
     })
   }
 
   //This method is use to download the yaml configuration file
-  onDownloadConfiguration(tmyconf:any){
-    this.serviceTmyconf.downloadTmyConf(tmyconf.id).subscribe((resp:any)=>{
-      console.log(resp)
-    })
+  onDownloadConfiguration(tmyconf:any): void {
+    this.serviceTmyconf.downloadFileTmyConf(tmyconf.id).subscribe(
+      (data: Blob) => {
+        const blob = new Blob([data], { type: 'application/x-yaml' });
+        const url = window.URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = this.getCurrentDateTime()+'_'+tmyconf.project_name+'_config_'+tmyconf.id+'.yml';
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
+        window.URL.revokeObjectURL(url);
+      },
+      error => {
+        console.error('Error downloading the file', error);
+      }
+    );
   }
 
   get f() { return this.tmyConfFormGroup.controls; }
@@ -279,9 +297,10 @@ export class TmyconfComponent implements OnInit {
 
          // stop here if form is invalid
          if (this.tmyConfFormGroup.invalid) {
+          console.log("This invalid")
              return;
          }
-     this.serviceTmyconf.upDateTmyConf(this.tmyConfFormGroup.value).subscribe((resp:any) => {
+     this.serviceTmyconf.postTmyConf (this.tmyConfFormGroup.value).subscribe((resp:any) => {
        this.serviceTmyconf.showNotification(resp.message,'success')
        this.modalService.dismissAll();
        this.ngOnInit(); //reload the table
@@ -297,6 +316,7 @@ export class TmyconfComponent implements OnInit {
 
 //Cette methode permet de souvegarder la mise à jour faite sur une configuration
 onUpdate(){
+   console.log("good one",this.editTmyConfForm.value)
    this.serviceTmyconf.upDateTmyConf(this.editTmyConfForm.value).subscribe((results:any) => {
      this.serviceTmyconf.showNotification(results.message,'success');
        this.ngOnInit();
