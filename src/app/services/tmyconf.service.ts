@@ -2,6 +2,8 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs/internal/Observable';
 import { environment } from 'src/environments/environment';
+import* as $ from 'jquery'
+import 'bootstrap-notify'
 
 @Injectable({
   providedIn: 'root'
@@ -20,7 +22,7 @@ export class TmyconfService {
 
   //Cette methode permet d'afficher les notification quand l'utilisateur effectue une opération.
   showNotification(mess:string,_type:string){
-    (this as any).notify({
+    ($ as any).notify({
       icon: "add_alert",
       message: mess
       },{

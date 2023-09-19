@@ -33,7 +33,8 @@
             <th>Traker Description</th>
             <th>Details</th>
             <th>Modify</th>
-            <th>download</th>
+            <th>Download</th>
+            <th>Delete</th>
           </tr>
 
         </thead>
@@ -48,7 +49,7 @@
             <td><span>{{tmyconf.pv_system.tracker!=null?tmyconf.pv_system.tracker.description:""}}</span></td>
             <td>
               <div class="example-button-container ">
-                <button mat-mini-fab class="blue-lucisun" (click)="openProfil(contentProfil, tmyconf)">
+                <button mat-mini-fab class="blue-lucisun" (click)="openDetails(contentDetails, tmyconf)">
                   <mat-icon>visibility</mat-icon>
                 </button>
               </div>
@@ -64,6 +65,13 @@
               <div class="example-button-container ">
                 <button mat-mini-fab class="green-lucisun" (click)="onDownloadConfiguration(tmyconf)">
                   <mat-icon>download</mat-icon>
+                </button>
+              </div>
+            </td>
+            <td>
+              <div class="example-button-container ">
+                <button mat-mini-fab class="btn-danger" (click)="openDelete(contentDelete,tmyconf)">
+                  <mat-icon>delete</mat-icon>
                 </button>
               </div>
             </td>
@@ -100,33 +108,9 @@
           <div *ngIf="f.latitude.errors.required">Latitude is required</div>
         </div>
       </div>
-      <!-- <div class="form-group">
-        <label for="birthDate">Birth Date</label>
-        <div class="form-group">
-          <div class="input-group">
-            <input class="form-control" placeholder="yyyy-mm-dd" name="dp" ngbDatepicker #d="ngbDatepicker"
-              id="birthDate" [minDate]="{year: 1975, month: 1, day: 1}" [maxDate]="{year: 2005, month: 12, day: 31}"
-              formControlName="birthDate" [ngClass]="{ 'is-invalid':submitted && f.birthDate.errors }">
-            <div class="input-group-addon" (click)="d.toggle()">
-              <img src="assets/images/calendar.png" style="width: 3.2rem; height: 2.5rem; cursor: pointer;" />
-            </div>
-            <div *ngIf="submitted && f.birthDate.errors" class="invalid-feedback">
-              <div *ngIf="f.birthDate.errors.required">Birth Date is required</div>
-            </div>
-          </div>
-        </div>
-      </div> -->
-      <div class="form-group">
-        <label for="pv_description">PV Description</label>
-        <input id="pv_description" formControlName="pv_description" class="form-control"
-          [ngClass]="{ 'is-invalid':submitted && f.pv_description.errors }">
-        <div *ngIf="submitted && f.pv_description.errors" class="invalid-feedback">
-          <div *ngIf="f.pv_description.errors.required">PV Description is required</div>
-        </div>
-      </div>
       <div class="form-group">
         <label for="longitude">Longitude</label>
-        <input id="longitude" formControlName="longitude" class="form-control" placeholder="774596879"
+        <input id="longitude" formControlName="longitude" class="form-control"
           [ngClass]="{ 'is-invalid':submitted && f.longitude.errors }">
         <div *ngIf="submitted && f.longitude.errors" class="invalid-feedback">
           <div *ngIf="f.longitude.errors.required">Longitude is required</div>
@@ -140,6 +124,15 @@
         <div *ngIf="submitted && f.altitude.errors" class="invalid-feedback">
           <div *ngIf="f.altitude.errors.required">Altitude is required</div>
           <div *ngIf="f.altitude.errors.pattern"> Altitude not valid.</div>
+        </div>
+      </div>
+      
+      <div class="form-group">
+        <label for="pv_description">PV Description</label>
+        <input id="pv_description" formControlName="pv_description" class="form-control"
+          [ngClass]="{ 'is-invalid':submitted && f.pv_description.errors }">
+        <div *ngIf="submitted && f.pv_description.errors" class="invalid-feedback">
+          <div *ngIf="f.pv_description.errors.required">PV Description is required</div>
         </div>
       </div>
       <div class="form-group">
@@ -356,101 +349,263 @@
   </div>
 </ng-template>
 
-<ng-template #contentProfil let-modal>
-  <!-- <div class="modal-header">
-      <h2 class="modal-title" id="modal-basic-title">Customer details</h2>
+<ng-template #contentDetails let-modal>
+  <div class="modal-header">
+      <h2 class="modal-title" id="modal-basic-title">Configuration details</h2>
       <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
         <span aria-hidden="true">&times;</span>
       </button>
     </div>
         <div class="modal-body">
           <div class="row">
-            <div class="col-4">
-              <img *ngIf="customerDetails.photoUser" src="data:image/png;base64,{{customerDetails.photoUser}}" width="150" height="150" class="rounded-circle mx-auto d-block" alt="">
-              <img *ngIf="!customerDetails.photoUser" [src]=avatar_piture width="120" height="150" class="rounded-circle mx-auto d-block" alt=""/>
-             </div>
-              <div class="col-3"></div>
-          </div>
-           <hr>
-          <div class="row">
             <div class="col-sm-5">
-              <h3 class="mb-0">ID Card number</h3>
+              <h3 class="mb-0">Project Name</h3>
             </div>
             <div class="col-sm-7 text-secondary font-weight-bold text-right">
-              {{customerDetails.altitude!=null?customerDetails.altitude:""}}
+              {{ tmyConfDetails.project_name != null ? tmyConfDetails.project_name : "" }}
             </div>
           </div>
-           <hr>
+          <hr>
           
-           <hr>
           <div class="row">
             <div class="col-sm-5">
-              <h3 class="mb-0">Firstname</h3>
+              <h3 class="mb-0">Latitude</h3>
             </div>
             <div class="col-sm-7 text-secondary font-weight-bold text-right">
-              {{customerDetails.firstName!=null?customerDetails.firstName:""}}
+              {{ tmyConfDetails.location != null ? tmyConfDetails.location.latitude : "Aucune" }}
+            </div>
+          </div>
+          <hr>
+          
+          <div class="row">
+            <div class="col-sm-5">
+              <h3 class="mb-0">Longitude</h3>
+            </div>
+            <div class="col-sm-7 text-secondary font-weight-bold text-right">
+              {{ tmyConfDetails.location != null ? tmyConfDetails.location.longitude : "Aucune" }}
+            </div>
+          </div>
+          <hr>
+          
+          <div class="row">
+            <div class="col-sm-5">
+              <h3 class="mb-0">Altitude</h3>
+            </div>
+            <div class="col-sm-7 text-secondary font-weight-bold text-right">
+              {{ tmyConfDetails.location != null ? tmyConfDetails.location.altitude : "Aucune" }}
+            </div>
+          </div>
+          <hr>
+          
+          <div class="row">
+            <div class="col-sm-5">
+              <h3 class="mb-0">Technology</h3>
+            </div>
+            <div class="col-sm-7 text-secondary font-weight-bold text-right">
+              {{ tmyConfDetails.pv_system != null ? tmyConfDetails.pv_system.technology : "Aucune" }}
+            </div>
+          </div>
+          <hr>
+          
+          <div class="row">
+            <div class="col-sm-5">
+              <h3 class="mb-0">PV Description</h3>
+            </div>
+            <div class="col-sm-7 text-secondary font-weight-bold text-right">
+              {{ tmyConfDetails.pv_system != null ? tmyConfDetails.pv_system.pv.description : "Aucune" }}
             </div>
           </div>
           <hr>
           <div class="row">
             <div class="col-sm-5">
-              <h3 class="mb-0">Lastname</h3>
+              <h3 class="mb-0">Tilt</h3>
             </div>
             <div class="col-sm-7 text-secondary font-weight-bold text-right">
-               {{customerDetails.lastName!=null?customerDetails.lastName:""}}
+              {{ tmyConfDetails.pv_system != null ? tmyConfDetails.pv_system.pv.tilt : "Aucune" }}
+            </div>
+          </div>
+          <hr>
+          
+          <div class="row">
+            <div class="col-sm-5">
+              <h3 class="mb-0">Azimuth</h3>
+            </div>
+            <div class="col-sm-7 text-secondary font-weight-bold text-right">
+              {{ tmyConfDetails.pv_system != null ? tmyConfDetails.pv_system.pv.azimuth : "Aucune" }}
+            </div>
+          </div>
+          <hr>
+          
+          <div class="row">
+            <div class="col-sm-5">
+              <h3 class="mb-0">Tracker Description</h3>
+            </div>
+            <div class="col-sm-7 text-secondary font-weight-bold text-right">
+              {{ tmyConfDetails.pv_system != null ? tmyConfDetails.pv_system.tracker.description : "Aucune" }}
+            </div>
+          </div>
+          <hr>
+          
+          <div class="row">
+            <div class="col-sm-5">
+              <h3 class="mb-0">Ground Covered Ratio (GCR)</h3>
+            </div>
+            <div class="col-sm-7 text-secondary font-weight-bold text-right">
+              {{ tmyConfDetails.pv_system != null ? tmyConfDetails.pv_system.tracker.gcr : "Aucune" }}
+            </div>
+          </div>
+          <hr>
+          
+          <div class="row">
+            <div class="col-sm-5">
+              <h3 class="mb-0">Axis Azimuth</h3>
+            </div>
+            <div class="col-sm-7 text-secondary font-weight-bold text-right">
+              {{ tmyConfDetails.pv_system != null ? tmyConfDetails.pv_system.tracker.axis_azimuth : "Aucune" }}
+            </div>
+          </div>
+          <hr>
+          
+          <div class="row">
+            <div class="col-sm-5">
+              <h3 class="mb-0">Maximum Rotation Angle</h3>
+            </div>
+            <div class="col-sm-7 text-secondary font-weight-bold text-right">
+              {{ tmyConfDetails.pv_system != null ? tmyConfDetails.pv_system.tracker.max_angle : "" }}
+            </div>
+          </div>
+          <hr>
+          
+          <div class="row">
+            <div class="col-sm-5">
+              <h3 class="mb-0">Request ID</h3>
+            </div>
+            <div class="col-sm-7 text-secondary font-weight-bold text-right">
+              {{ tmyConfDetails.analysis != null ? tmyConfDetails.analysis.request_id : "" }}
             </div>
           </div>
           <hr>
           <div class="row">
             <div class="col-sm-5">
-              <h3 class="mb-0">Phone number</h3>
+              <h3 class="mb-0">P50</h3>
             </div>
             <div class="col-sm-7 text-secondary font-weight-bold text-right">
-             +221 {{customerDetails.username}}
+              {{ tmyConfDetails.analysis != null ? tmyConfDetails.analysis.probabilities.P50 : "" }}
+            </div>
+          </div>
+          <hr>
+          
+          <div class="row">
+            <div class="col-sm-5">
+              <h3 class="mb-0">P75</h3>
+            </div>
+            <div class="col-sm-7 text-secondary font-weight-bold text-right">
+              {{ tmyConfDetails.analysis != null ? tmyConfDetails.analysis.probabilities.P75 : "" }}
+            </div>
+          </div>
+          <hr>
+          
+          <div class="row">
+            <div class="col-sm-5">
+              <h3 class="mb-0">P90</h3>
+            </div>
+            <div class="col-sm-7 text-secondary font-weight-bold text-right">
+              {{ tmyConfDetails.analysis != null ? tmyConfDetails.analysis.probabilities.P90 : "" }}
+            </div>
+          </div>
+          <hr>
+          
+          <div class="row">
+            <div class="col-sm-5">
+              <h3 class="mb-0">P10</h3>
+            </div>
+            <div class="col-sm-7 text-secondary font-weight-bold text-right">
+              {{ tmyConfDetails.analysis != null ? tmyConfDetails.analysis.probabilities.P10 : "" }}
+            </div>
+          </div>
+          <hr>
+          
+          <div class="row">
+            <div class="col-sm-5">
+              <h3 class="mb-0">P99</h3>
+            </div>
+            <div class="col-sm-7 text-secondary font-weight-bold text-right">
+              {{ tmyConfDetails.analysis.probabilities != null ? tmyConfDetails.analysis.probabilities.P99 : "" }}
             </div>
           </div>
           <hr>
           <div class="row">
             <div class="col-sm-5">
-              <h3 class="mb-0">Gender</h3>
+              <h3 class="mb-0">Ambient Temperature</h3>
             </div>
             <div class="col-sm-7 text-secondary font-weight-bold text-right">
-              {{customerDetails.gender!=null?customerDetails.gender['name']:""}}
-            </div>
-          </div>
-          <hr> -->
-
-
-  <!-- <div class="row">
-            <div class="col-sm-5">
-              <h3 class="mb-0">Birth date</h3>
-            </div>
-            <div class="col-sm-7 text-secondary font-weight-bold text-right">
-              {{(customerDetails.birthDate!=null?customerDetails.birthDate:"").toString().split('T')[0]}}
+              {{ tmyConfDetails.analysis.meteo_data != null ? tmyConfDetails.analysis.meteo_data.ambient_temperature : "" }}
             </div>
           </div>
           <hr>
+          
           <div class="row">
             <div class="col-sm-5">
-              <h3 class="mb-0">technology</h3>
+              <h3 class="mb-0">PM 2.5</h3>
             </div>
             <div class="col-sm-7 text-secondary font-weight-bold text-right">
-              {{customerDetails.technology!=null?customerDetails.technology:""}}, {{customerDetails.village!=null?customerDetails.village:""}}
+              {{ tmyConfDetails.analysis.meteo_data != null ? tmyConfDetails.analysis.meteo_data.pm_2_5 : "" }}
             </div>
           </div>
           <hr>
+          
           <div class="row">
             <div class="col-sm-5">
-              <h3 class="mb-0">Activity</h3>
+              <h3 class="mb-0">PM 10</h3>
             </div>
             <div class="col-sm-7 text-secondary font-weight-bold text-right">
-              {{customerDetails.activity!=null?customerDetails.activity:""}}
+              {{ tmyConfDetails.analysis.meteo_data != null ? tmyConfDetails.analysis.meteo_data.pm_10 : "" }}
             </div>
           </div>
-        </div>
+          <hr>
+          
+          <div class="row">
+            <div class="col-sm-5">
+              <h3 class="mb-0">Relative Humidity</h3>
+            </div>
+            <div class="col-sm-7 text-secondary font-weight-bold text-right">
+              {{ tmyConfDetails.analysis.meteo_data != null ? tmyConfDetails.analysis.meteo_data.relative_humidity : "" }}
+            </div>
+          </div>
+          <hr>
+          
+          <div class="row">
+            <div class="col-sm-5">
+              <h3 class="mb-0">Precipitable Water</h3>
+            </div>
+            <div class="col-sm-7 text-secondary font-weight-bold text-right">
+              {{ tmyConfDetails.analysis.meteo_data != null ? tmyConfDetails.analysis.meteo_data.precipitable_water : "" }}
+            </div>
+          </div>
+          <hr>
+          
+          <div class="row">
+            <div class="col-sm-5">
+              <h3 class="mb-0">Wind Direction</h3>
+            </div>
+            <div class="col-sm-7 text-secondary font-weight-bold text-right">
+              {{ tmyConfDetails.analysis.meteo_data != null ? tmyConfDetails.analysis.meteo_data.wind_direction : "" }}
+            </div>
+          </div>
+          <hr>
+          
+          <div class="row">
+            <div class="col-sm-5">
+              <h3 class="mb-0">Granularity</h3>
+            </div>
+            <div class="col-sm-7 text-secondary font-weight-bold text-right">
+              {{ tmyConfDetails.analysis != null ? tmyConfDetails.analysis.granularity : "" }}
+            </div>
+          </div>
+      </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-outline-dark" (click)="modal.close('Save click')">Close</button>
-      </div> -->
+      </div>
 </ng-template>
 
 <ng-template #contentEdit let-modal>
@@ -478,33 +633,9 @@
           <div *ngIf="f.latitude.errors.required">Latitude is required</div>
         </div>
       </div>
-      <!-- <div class="form-group">
-        <label for="birthDate">Birth Date</label>
-        <div class="form-group">
-          <div class="input-group">
-            <input class="form-control" placeholder="yyyy-mm-dd" name="dp" ngbDatepicker #d="ngbDatepicker"
-             [minDate]="{year: 1975, month: 1, day: 1}" [maxDate]="{year: 2005, month: 12, day: 31}"
-              formControlName="birthDate" [ngClass]="{ 'is-invalid':submitted && f.birthDate.errors }">
-            <div class="input-group-addon" (click)="d.toggle()">
-              <img src="assets/images/calendar.png" style="width: 3.2rem; height: 2.5rem; cursor: pointer;" />
-            </div>
-            <div *ngIf="submitted && f.birthDate.errors" class="invalid-feedback">
-              <div *ngIf="f.birthDate.errors.required">Birth Date is required</div>
-            </div>
-          </div>
-        </div>
-      </div> -->
-      <div class="form-group">
-        <label for="pv_description">PV Description</label>
-        <input formControlName="pv_description" class="form-control"
-          [ngClass]="{ 'is-invalid':submitted && f.pv_description.errors }">
-        <div *ngIf="submitted && f.pv_description.errors" class="invalid-feedback">
-          <div *ngIf="f.pv_description.errors.required">PV Description is required</div>
-        </div>
-      </div>
       <div class="form-group">
         <label for="longitude">Longitude</label>
-        <input formControlName="longitude" class="form-control" placeholder="774596879"
+        <input formControlName="longitude" class="form-control"
           [ngClass]="{ 'is-invalid':submitted && f.longitude.errors }">
         <div *ngIf="submitted && f.longitude.errors" class="invalid-feedback">
           <div *ngIf="f.longitude.errors.required">Longitude is required</div>
@@ -518,6 +649,14 @@
         <div *ngIf="submitted && f.altitude.errors" class="invalid-feedback">
           <div *ngIf="f.altitude.errors.required">Altitude is required</div>
           <div *ngIf="f.altitude.errors.pattern"> Altitude not valid.</div>
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="pv_description">PV Description</label>
+        <input formControlName="pv_description" class="form-control"
+          [ngClass]="{ 'is-invalid':submitted && f.pv_description.errors }">
+        <div *ngIf="submitted && f.pv_description.errors" class="invalid-feedback">
+          <div *ngIf="f.pv_description.errors.required">PV Description is required</div>
         </div>
       </div>
       <div class="form-group">

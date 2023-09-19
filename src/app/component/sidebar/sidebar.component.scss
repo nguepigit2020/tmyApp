@@ -6,8 +6,9 @@
   }
   
   .mat-list-item {
+    // color: #070707 !important;
     font-size: 16px;
-    height: 44px !important;
+    height: 65px !important;
     margin-bottom: 4px;
     &:hover {
       color: #f2f5f7 !important;
@@ -17,7 +18,19 @@
         border-radius: 5px;
         margin: 0 8px;
         &:hover {
-          background: #ff9200 !important;
+          background: #552E5F !important;
+        }
+      }
+    }
+  }
+
+.list-item-active {
+    color: #f2f5f7 !important;
+    ::ng-deep {
+      .mat-list-item-content {
+        background: #552E5F !important;
+        &:hover {
+          background: #552E5F !important;
         }
       }
     }

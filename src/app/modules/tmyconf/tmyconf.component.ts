@@ -204,6 +204,7 @@ export class TmyconfComponent implements OnInit {
             altitude:['',Validators.required],
             technology:['',Validators.required],
             pv_description:['',[Validators.required]],
+
             tilt:['',Validators.required],
             azimuth: ['',Validators.required],
             tracker_description: ['',Validators.required],
@@ -211,6 +212,7 @@ export class TmyconfComponent implements OnInit {
             axis_azimuth: ['',Validators.required],
             max_angle: ['',Validators.required],
             request_id: ['',Validators.required],
+            
             p50: ['',Validators.required],
             p75: ['Select',Validators.required],
             p90: ['Select',Validators.required],
@@ -295,7 +297,7 @@ export class TmyconfComponent implements OnInit {
     console.log(this.tmyConfFormGroup.value)
      this.submitted = true;
 
-         // stop here if form is invalid
+         // stop here if the form is invalid
          if (this.tmyConfFormGroup.invalid) {
           console.log("This invalid")
              return;
@@ -317,37 +319,37 @@ export class TmyconfComponent implements OnInit {
 //Cette methode permet de souvegarder la mise à jour faite sur une configuration
 onUpdate(){
    console.log("good one",this.editTmyConfForm.value)
-   this.serviceTmyconf.upDateTmyConf(this.editTmyConfForm.value).subscribe((results:any) => {
-     this.serviceTmyconf.showNotification(results.message,'success');
+   this.serviceTmyconf.upDateTmyConf(this.editTmyConfForm.value).subscribe((resp:any) => {
+     this.serviceTmyconf.showNotification(resp.message,'success');
        this.ngOnInit();
        this.modalService.dismissAll();
      },err=>{
        if (err.status == 400){
             this.serviceTmyconf.showNotification("<h3>Failed to update the informations.</h3>",'danger')
        }else{
-            this.serviceTmyconf.showNotification("<h3>Failed to update the informations, something was wrong.</h3>",'danger')
+            this.serviceTmyconf.showNotification(err.error.message,'danger')
        }
        this.modalService.dismissAll();
    })
 }
 
-//Cette methode permet de supprimer un cashier selectioné via le bouton Delete
+//Cette methode permet de supprimer une configuration
 onDelete(){
-//   this.customerService.deleteCustomer(this.customerId).subscribe((results:any) => {
-//     this.customerService.showNotification(results.message,'success');
-//     this.ngOnInit();
-//      this.modalService.dismissAll();
-//    },err=>{
-//     if (err.status == 400 && err.error.message=='14'){
-//       this.customerService.showNotification("<h3>Failed to delete this user, he is linked to one platform.</h3>",'danger')
-//     }else{
-//       this.customerService.showNotification("<h3>Failed to delete this user, something was wrong.</h3>",'danger')
-//  }
-//  this.modalService.dismissAll();
-//   });
+  this.serviceTmyconf.deleteTmyConf (this.tmyCongId).subscribe((results:any) => {
+    this.serviceTmyconf.showNotification(results.message,'success');
+     this.ngOnInit();
+      this.modalService.dismissAll();
+    },err=>{
+     if (err.status == 400 && err.error.message=='14'){
+       this.serviceTmyconf.showNotification("<h3>Failed to delete this configuration.</h3>",'danger')
+    }else{
+       this.serviceTmyconf.showNotification("<h3>Failed to delete this configuration, something was wrong.</h3>",'danger')
+  }
+  this.modalService.dismissAll();
+  });
 }
 
-//Cette methode nous permet d'ouvrir le formulaire de saisie d'un customer
+//Cette methode nous permet d'ouvrir le formulaire de saisie d'une configuration
 open(content: any) {
   this.modalService.open(content, {
     ariaLabelledBy: 'modal-basic-title',size:'lg'}).result.then((result) => {
@@ -357,7 +359,7 @@ open(content: any) {
   });
 }
 
- //Cette permeture des different dialogue
+ //Cette methode permet de fermer les differents dialogue
  private getDismissReason(reason: any): string {
   if (reason === ModalDismissReasons.ESC) {
     return 'by pressing ESC';
@@ -369,19 +371,17 @@ open(content: any) {
 }
 
 //Cette methode nous permet d'afficher les details de l'element sectionner sur le tableau via le bouton Details
-openProfil(targetModal: any, tmyCong: any) {
-  //Recupération des information du client selectionné par la varriable customerDetails
+openDetails(targetModal: any, tmyCong: any) {
    this.tmyConfDetails = tmyCong;
    this.modalService.open(targetModal, {
     centered: true,
     backdrop: 'static',
-    //size: 'lg'
+    size: 'lg'
   });
  }
  
- //Methode pour ouvrir le formulaire de modification d'un cashier lorsqu'on clic sur le bouton Edit
+ //Methode pour ouvrir le formulaire de modification d'une configuration.
  openEdit(targetModal: any, tmyCong: any) {
-  console.log("Hello")
    this.modalService.open(targetModal, {
     centered: true,
     backdrop: 'static',
