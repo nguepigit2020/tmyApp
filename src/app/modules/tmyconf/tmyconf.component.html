@@ -1,3 +1,7 @@
+<div *ngIf="!isLoaded">
+  <mat-spinner style="top:50%; left: 50%; position: absolute;" color='#5ca4db'></mat-spinner>
+</div>
+<div *ngIf="isLoaded">
 <div class="container-fluid">
   <div class="card">
     <div class="card-header blue-lucisun">
@@ -21,6 +25,7 @@
         </div>
 
       </div>
+      <!-- Begin table to display the list of configuration -->
       <table class="table table-bordered table-striped  hover">
         <thead>
           <tr>
@@ -78,11 +83,12 @@
           </tr>
         </tbody>
       </table>
-
+     <!-- End table -->
     </div>
   </div>
 </div>
 
+<!-- Begin create form -->
 <ng-template #content let-modal>
   <div class="modal-header">
     <h2 class="modal-title" id="modal-basic-title">New Configuration</h2>
@@ -92,254 +98,266 @@
   </div>
   <div class="modal-body" *ngIf="tmyConfFormGroup">
     <form [formGroup]="tmyConfFormGroup">
-      <div class="form-group">
-        <label for="project_name">Project Name</label>
-        <input id="project_name" formControlName="project_name" class="form-control"
-          [ngClass]="{ 'is-invalid':submitted && f.project_name.errors }">
-        <div *ngIf="submitted && f.project_name.errors" class="invalid-feedback">
-          <div *ngIf="f.project_name.errors.required">Project Name is required</div>
+      <legend class="w-auto">Project Details</legend>
+      <fieldset class="border border-dark rounded p-2 m-2"> 
+        <div class="form-group">
+          <label for="project_name">Project Name</label>
+          <input id="project_name" formControlName="project_name" class="form-control"
+            [ngClass]="{ 'is-invalid':submitted && f.project_name.errors }">
+          <div *ngIf="submitted && f.project_name.errors" class="invalid-feedback">
+            <div *ngIf="f.project_name.errors.required">Project Name is required</div>
+          </div>
         </div>
-      </div>
-      <div class="form-group">
-        <label for="latitude">Latitude</label>
-        <input id="latitude" formControlName="latitude" class="form-control"
-          [ngClass]="{ 'is-invalid':submitted && f.latitude.errors }">
-        <div *ngIf="submitted && f.latitude.errors" class="invalid-feedback">
-          <div *ngIf="f.latitude.errors.required">Latitude is required</div>
+      </fieldset>
+      <legend class="w-auto m-2">Location</legend>
+      <fieldset class="border border-dark rounded p-2 m-2">
+        <div class="form-group">
+          <label for="latitude">Latitude</label>
+          <input id="latitude" formControlName="latitude" class="form-control"
+            [ngClass]="{ 'is-invalid':submitted && f.latitude.errors }">
+          <div *ngIf="submitted && f.latitude.errors" class="invalid-feedback">
+            <div *ngIf="f.latitude.errors.required">Latitude is required</div>
+          </div>
         </div>
-      </div>
-      <div class="form-group">
-        <label for="longitude">Longitude</label>
-        <input id="longitude" formControlName="longitude" class="form-control"
-          [ngClass]="{ 'is-invalid':submitted && f.longitude.errors }">
-        <div *ngIf="submitted && f.longitude.errors" class="invalid-feedback">
-          <div *ngIf="f.longitude.errors.required">Longitude is required</div>
-          <div *ngIf="f.longitude.errors.pattern"> Longitude not valid.</div>
+        <div class="form-group">
+          <label for="longitude">Longitude</label>
+          <input id="longitude" formControlName="longitude" class="form-control"
+            [ngClass]="{ 'is-invalid':submitted && f.longitude.errors }">
+          <div *ngIf="submitted && f.longitude.errors" class="invalid-feedback">
+            <div *ngIf="f.longitude.errors.required">Longitude is required</div>
+            <div *ngIf="f.longitude.errors.pattern"> Longitude not valid.</div>
+          </div>
         </div>
-      </div>
-      <div class="form-group">
-        <label for="altitude">Altitude</label>
-        <input id="altitude" formControlName="altitude" class="form-control"
-          [ngClass]="{ 'is-invalid':submitted && f.altitude.errors }">
-        <div *ngIf="submitted && f.altitude.errors" class="invalid-feedback">
-          <div *ngIf="f.altitude.errors.required">Altitude is required</div>
-          <div *ngIf="f.altitude.errors.pattern"> Altitude not valid.</div>
+        <div class="form-group">
+          <label for="altitude">Altitude</label>
+          <input id="altitude" formControlName="altitude" class="form-control"
+            [ngClass]="{ 'is-invalid':submitted && f.altitude.errors }">
+          <div *ngIf="submitted && f.altitude.errors" class="invalid-feedback">
+            <div *ngIf="f.altitude.errors.required">Altitude is required</div>
+            <div *ngIf="f.altitude.errors.pattern"> Altitude not valid.</div>
+          </div>
         </div>
-      </div>
-      
-      <div class="form-group">
-        <label for="pv_description">PV Description</label>
-        <input id="pv_description" formControlName="pv_description" class="form-control"
-          [ngClass]="{ 'is-invalid':submitted && f.pv_description.errors }">
-        <div *ngIf="submitted && f.pv_description.errors" class="invalid-feedback">
-          <div *ngIf="f.pv_description.errors.required">PV Description is required</div>
+      </fieldset>
+      <legend class="w-auto m-2">PV System Configuration</legend>
+      <fieldset class="border border-dark rounded p-2 m-2">
+        <div class="form-group">
+          <label for="pv_description">PV Description</label>
+          <input id="pv_description" formControlName="pv_description" class="form-control"
+            [ngClass]="{ 'is-invalid':submitted && f.pv_description.errors }">
+          <div *ngIf="submitted && f.pv_description.errors" class="invalid-feedback">
+            <div *ngIf="f.pv_description.errors.required">PV Description is required</div>
+          </div>
         </div>
-      </div>
-      <div class="form-group">
-        <label for="technology">Technology</label>
-        <input id="technology" formControlName="technology" class="form-control"
-          [ngClass]="{ 'is-invalid':submitted && f.technology.errors }">
-        <div *ngIf="submitted && f.technology.errors" class="invalid-feedback">
-          <div *ngIf="f.technology.errors.required">Technology is required</div>
+        <div class="form-group">
+          <label for="technology">Technology</label>
+          <input id="technology" formControlName="technology" class="form-control"
+            [ngClass]="{ 'is-invalid':submitted && f.technology.errors }">
+          <div *ngIf="submitted && f.technology.errors" class="invalid-feedback">
+            <div *ngIf="f.technology.errors.required">Technology is required</div>
+          </div>
         </div>
-      </div>
-      <div class="form-group">
-        <label for="tilt">PV Tilt</label>
-        <input id="tilt" formControlName="tilt" class="form-control"
-          [ngClass]="{ 'is-invalid':submitted && f.tilt.errors }">
-        <div *ngIf="submitted && f.tilt.errors" class="invalid-feedback">
-          <div *ngIf="f.tilt.errors.required">PV Tilt is required</div>
-          <div *ngIf="f.tilt.errors.pattern"> PV Tilt not valid.</div>
+        <div class="form-group">
+          <label for="tilt">PV Tilt</label>
+          <input id="tilt" formControlName="tilt" class="form-control"
+            [ngClass]="{ 'is-invalid':submitted && f.tilt.errors }">
+          <div *ngIf="submitted && f.tilt.errors" class="invalid-feedback">
+            <div *ngIf="f.tilt.errors.required">PV Tilt is required</div>
+            <div *ngIf="f.tilt.errors.pattern"> PV Tilt not valid.</div>
+          </div>
         </div>
-      </div>
-
-      <div class="form-group">
-        <label for="azimuth">PV azimuth</label>
-        <input id="azimuth" formControlName="azimuth" class="form-control"
-          [ngClass]="{ 'is-invalid':submitted && f.azimuth.errors }">
-        <div *ngIf="submitted && f.azimuth.errors" class="invalid-feedback">
-          <div *ngIf="f.azimuth.errors.required">PV azimuth is required</div>
-          <div *ngIf="f.azimuth.errors.pattern"> PV azimuth not valid.</div>
+  
+        <div class="form-group">
+          <label for="azimuth">PV azimuth</label>
+          <input id="azimuth" formControlName="azimuth" class="form-control"
+            [ngClass]="{ 'is-invalid':submitted && f.azimuth.errors }">
+          <div *ngIf="submitted && f.azimuth.errors" class="invalid-feedback">
+            <div *ngIf="f.azimuth.errors.required">PV azimuth is required</div>
+            <div *ngIf="f.azimuth.errors.pattern"> PV azimuth not valid.</div>
+          </div>
         </div>
-      </div>
-      <div class="form-group">
-        <label for="tracker_description"> tracker_description</label>
-        <input id="tracker_description" formControlName="tracker_description" class="form-control"
-          [ngClass]="{ 'is-invalid':submitted && f.tracker_description.errors }">
-        <div *ngIf="submitted && f.tracker_description.errors" class="invalid-feedback">
-          <div *ngIf="f.tracker_description.errors.required">PV tracker_description is required</div>
-          <div *ngIf="f.tracker_description.errors.pattern"> PV tracker_description not valid.</div>
+        <div class="form-group">
+          <label for="tracker_description">PV Tracker Description</label>
+          <input id="tracker_description" formControlName="tracker_description" class="form-control"
+            [ngClass]="{ 'is-invalid':submitted && f.tracker_description.errors }">
+          <div *ngIf="submitted && f.tracker_description.errors" class="invalid-feedback">
+            <div *ngIf="f.tracker_description.errors.required">PV Tracker Description is required</div>
+            <div *ngIf="f.tracker_description.errors.pattern"> PV Tracker Description not valid.</div>
+          </div>
         </div>
-      </div>
-      <div class="form-group">
-        <label for="gcr">PV gcr</label>
-        <input id="gcr" formControlName="gcr" class="form-control"
-          [ngClass]="{ 'is-invalid':submitted && f.gcr.errors }">
-        <div *ngIf="submitted && f.gcr.errors" class="invalid-feedback">
-          <div *ngIf="f.gcr.errors.required">PV gcr is required</div>
-          <div *ngIf="f.gcr.errors.pattern"> PV gcr not valid.</div>
+        <div class="form-group">
+          <label for="gcr">PV Ground Covered Ratio (gcr)
+            </label>
+          <input id="gcr" formControlName="gcr" class="form-control"
+            [ngClass]="{ 'is-invalid':submitted && f.gcr.errors }">
+          <div *ngIf="submitted && f.gcr.errors" class="invalid-feedback">
+            <div *ngIf="f.gcr.errors.required">PV Ground Covered Ratio is required</div>
+            <div *ngIf="f.gcr.errors.pattern"> PV Ground Covered Ratio not valid.</div>
+          </div>
         </div>
-      </div>
-      <div class="form-group">
-        <label for="axis_azimuth">PV axis_azimuth</label>
-        <input id="axis_azimuth" formControlName="axis_azimuth" class="form-control"
-          [ngClass]="{ 'is-invalid':submitted && f.axis_azimuth.errors }">
-        <div *ngIf="submitted && f.axis_azimuth.errors" class="invalid-feedback">
-          <div *ngIf="f.axis_azimuth.errors.required">PV axis_azimuth is required</div>
-          <div *ngIf="f.axis_azimuth.errors.pattern"> PV axis_azimuth not valid.</div>
+        <div class="form-group">
+          <label for="axis_azimuth">PV Azimuth angle of the tracker axis</label>
+          <input id="axis_azimuth" formControlName="axis_azimuth" class="form-control"
+            [ngClass]="{ 'is-invalid':submitted && f.axis_azimuth.errors }">
+          <div *ngIf="submitted && f.axis_azimuth.errors" class="invalid-feedback">
+            <div *ngIf="f.axis_azimuth.errors.required">PV Azimuth angle is required</div>
+            <div *ngIf="f.axis_azimuth.errors.pattern"> PV Azimuth angle not valid.</div>
+          </div>
         </div>
-      </div>
-      <div class="form-group">
-        <label for="max_angle">PV max_angle</label>
-        <input id="max_angle" formControlName="max_angle" class="form-control"
-          [ngClass]="{ 'is-invalid':submitted && f.max_angle.errors }">
-        <div *ngIf="submitted && f.max_angle.errors" class="invalid-feedback">
-          <div *ngIf="f.max_angle.errors.required">PV max_angle is required</div>
-          <div *ngIf="f.max_angle.errors.pattern"> PV max_angle not valid.</div>
+        <div class="form-group">
+          <label for="max_angle">PV Maximum Rotation Angle</label>
+          <input id="max_angle" formControlName="max_angle" class="form-control"
+            [ngClass]="{ 'is-invalid':submitted && f.max_angle.errors }">
+          <div *ngIf="submitted && f.max_angle.errors" class="invalid-feedback">
+            <div *ngIf="f.max_angle.errors.required">PV Maximum Rotation Angle is required</div>
+            <div *ngIf="f.max_angle.errors.pattern"> PV Maximum Rotation Angle not valid.</div>
+          </div>
         </div>
-      </div>
-
-      <div class="form-group">
-        <label for="request_id">request_id</label>
-        <input id="request_id" formControlName="request_id" class="form-control"
-          [ngClass]="{ 'is-invalid':submitted && f.request_id.errors }">
-        <div *ngIf="submitted && f.request_id.errors" class="invalid-feedback">
-          <div *ngIf="f.request_id.errors.required">request_id is required</div>
-          <div *ngIf="f.request_id.errors.pattern"> request_id not valid.</div>
+      </fieldset>
+      <legend class="w-auto m-2">Analysis Parameters</legend>
+      <fieldset class="border border-dark rounded p-2 m-2">
+        <div class="form-group">
+          <label for="request_id">Request ID</label>
+          <input id="request_id" formControlName="request_id" class="form-control"
+            [ngClass]="{ 'is-invalid':submitted && f.request_id.errors }">
+          <div *ngIf="submitted && f.request_id.errors" class="invalid-feedback">
+            <div *ngIf="f.request_id.errors.required">Request ID is required</div>
+            <div *ngIf="f.request_id.errors.pattern"> Request ID not valid.</div>
+          </div>
         </div>
-      </div>
-      <div class="form-group">
-        <label for="p50">P50</label>
-        <select class="form-control" formControlName="p50" id="p50"
-          [ngClass]="{ 'is-invalid':submitted && tmyConfFormGroup.value.p50=='Select'}">
-          <option disabled>Select</option>
-          <option>true</option>
-          <option>false</option>
-        </select>
-        <div *ngIf="submitted && tmyConfFormGroup.value.p50=='Select'" class="invalid-feedback">
-          <div *ngIf="tmyConfFormGroup.value.p50=='Select'">p50 is required</div>
+        <div class="form-group">
+          <label for="p50">Probability P50</label>
+          <select class="form-control" formControlName="p50" id="p50"
+            [ngClass]="{ 'is-invalid':submitted && tmyConfFormGroup.value.p50=='Select'}">
+            <option disabled>Select</option>
+            <option>true</option>
+            <option>false</option>
+          </select>
+          <div *ngIf="submitted && tmyConfFormGroup.value.p50=='Select'" class="invalid-feedback">
+            <div *ngIf="tmyConfFormGroup.value.p50=='Select'">Probability P50 is required</div>
+          </div>
         </div>
-      </div>
-      <div class="form-group">
-        <label for="p75">P75</label>
-        <select class="form-control" formControlName="p75" id="p75"
-          [ngClass]="{ 'is-invalid':submitted && tmyConfFormGroup.value.p75=='Select'}">
-          <option disabled>Select</option>
-          <option>true</option>
-          <option>false</option>
-        </select>
-        <div *ngIf="submitted && tmyConfFormGroup.value.p75=='Select'" class="invalid-feedback">
-          <div *ngIf="tmyConfFormGroup.value.p75=='Select'">p75 is required</div>
+        <div class="form-group">
+          <label for="p75">Probability P75</label>
+          <select class="form-control" formControlName="p75" id="p75"
+            [ngClass]="{ 'is-invalid':submitted && tmyConfFormGroup.value.p75=='Select'}">
+            <option disabled>Select</option>
+            <option>true</option>
+            <option>false</option>
+          </select>
+          <div *ngIf="submitted && tmyConfFormGroup.value.p75=='Select'" class="invalid-feedback">
+            <div *ngIf="tmyConfFormGroup.value.p75=='Select'">Probability P75 is required</div>
+          </div>
         </div>
-      </div>
-      <div class="form-group">
-        <label for="p90">P90</label>
-        <select class="form-control" formControlName="p90" id="p90"
-          [ngClass]="{ 'is-invalid':submitted && tmyConfFormGroup.value.p90=='Select'}">
-          <option disabled>Select</option>
-          <option>true</option>
-          <option>false</option>
-        </select>
-        <div *ngIf="submitted && tmyConfFormGroup.value.p90=='Select'" class="invalid-feedback">
-          <div *ngIf="tmyConfFormGroup.value.p90=='Select'">p90 is required</div>
+        <div class="form-group">
+          <label for="p90">Probability P90</label>
+          <select class="form-control" formControlName="p90" id="p90"
+            [ngClass]="{ 'is-invalid':submitted && tmyConfFormGroup.value.p90=='Select'}">
+            <option disabled>Select</option>
+            <option>true</option>
+            <option>false</option>
+          </select>
+          <div *ngIf="submitted && tmyConfFormGroup.value.p90=='Select'" class="invalid-feedback">
+            <div *ngIf="tmyConfFormGroup.value.p90=='Select'">Probability P90 is required</div>
+          </div>
         </div>
-      </div>
-      <div class="form-group">
-        <label for="p10">P10</label>
-        <select class="form-control" formControlName="p10" id="p10"
-          [ngClass]="{ 'is-invalid':submitted && tmyConfFormGroup.value.p10=='Select'}">
-          <option disabled>Select</option>
-          <option>true</option>
-          <option>false</option>
-        </select>
-        <div *ngIf="submitted && tmyConfFormGroup.value.p10=='Select'" class="invalid-feedback">
-          <div *ngIf="tmyConfFormGroup.value.p10=='Select'">p10 is required</div>
+        <div class="form-group">
+          <label for="p10">Probability P10</label>
+          <select class="form-control" formControlName="p10" id="p10"
+            [ngClass]="{ 'is-invalid':submitted && tmyConfFormGroup.value.p10=='Select'}">
+            <option disabled>Select</option>
+            <option>true</option>
+            <option>false</option>
+          </select>
+          <div *ngIf="submitted && tmyConfFormGroup.value.p10=='Select'" class="invalid-feedback">
+            <div *ngIf="tmyConfFormGroup.value.p10=='Select'">Probability P10 is required</div>
+          </div>
         </div>
-      </div>
-      <div class="form-group">
-        <label for="p99">P99</label>
-        <select class="form-control" formControlName="p99" id="p99"
-          [ngClass]="{ 'is-invalid':submitted && tmyConfFormGroup.value.p99=='Select'}">
-          <option disabled>Select</option>
-          <option>true</option>
-          <option>false</option>
-        </select>
-        <div *ngIf="submitted && tmyConfFormGroup.value.p99=='Select'" class="invalid-feedback">
-          <div *ngIf="tmyConfFormGroup.value.p99=='Select'">p99 is required</div>
+        <div class="form-group">
+          <label for="p99">Probability P99</label>
+          <select class="form-control" formControlName="p99" id="p99"
+            [ngClass]="{ 'is-invalid':submitted && tmyConfFormGroup.value.p99=='Select'}">
+            <option disabled>Select</option>
+            <option>true</option>
+            <option>false</option>
+          </select>
+          <div *ngIf="submitted && tmyConfFormGroup.value.p99=='Select'" class="invalid-feedback">
+            <div *ngIf="tmyConfFormGroup.value.p99=='Select'"> Probability P99 is required</div>
+          </div>
         </div>
-      </div>
-
-
-      <div class="form-group">
-        <label for="ambient_temperature">ambient_temperature</label>
-        <input id="ambient_temperature" formControlName="ambient_temperature" class="form-control"
-          [ngClass]="{ 'is-invalid':submitted && f.ambient_temperature.errors }">
-        <div *ngIf="submitted && f.ambient_temperature.errors" class="invalid-feedback">
-          <div *ngIf="f.ambient_temperature.errors.required">ambient_temperature is required</div>
-          <div *ngIf="f.ambient_temperature.errors.pattern"> ambient_temperature not valid.</div>
+  
+  
+        <div class="form-group">
+          <label for="ambient_temperature">Ambient Temperature</label>
+          <input id="ambient_temperature" formControlName="ambient_temperature" class="form-control"
+            [ngClass]="{ 'is-invalid':submitted && f.ambient_temperature.errors }">
+          <div *ngIf="submitted && f.ambient_temperature.errors" class="invalid-feedback">
+            <div *ngIf="f.ambient_temperature.errors.required">Ambient Temperature is required</div>
+            <div *ngIf="f.ambient_temperature.errors.pattern"> Ambient Temperature not valid.</div>
+          </div>
         </div>
-      </div>
-      <div class="form-group">
-        <label for="pm_2_5">pm_2_5</label>
-        <select class="form-control" formControlName="pm_2_5" id="pm_2_5"
-          [ngClass]="{ 'is-invalid':submitted && tmyConfFormGroup.value.pm_2_5=='Select'}">
-          <option disabled>Select</option>
-          <option>true</option>
-          <option>false</option>
-        </select>
-        <div *ngIf="submitted && tmyConfFormGroup.value.pm_2_5=='Select'" class="invalid-feedback">
-          <div *ngIf="tmyConfFormGroup.value.pm_2_5=='Select'">pm_2_5 is required</div>
+        <div class="form-group">
+          <label for="pm_2_5">Particulate matter 2.5</label>
+          <select class="form-control" formControlName="pm_2_5" id="pm_2_5"
+            [ngClass]="{ 'is-invalid':submitted && tmyConfFormGroup.value.pm_2_5=='Select'}">
+            <option disabled>Select</option>
+            <option>true</option>
+            <option>false</option>
+          </select>
+          <div *ngIf="submitted && tmyConfFormGroup.value.pm_2_5=='Select'" class="invalid-feedback">
+            <div *ngIf="tmyConfFormGroup.value.pm_2_5=='Select'">Particulate matter 2.5 is required</div>
+          </div>
         </div>
-      </div>
-      <div class="form-group">
-        <label for="pm_10">pm_10</label>
-        <select class="form-control" formControlName="pm_10" id="pm_10"
-          [ngClass]="{ 'is-invalid':submitted && tmyConfFormGroup.value.pm_10=='Select'}">
-          <option disabled>Select</option>
-          <option>true</option>
-          <option>false</option>
-        </select>
-        <div *ngIf="submitted && tmyConfFormGroup.value.pm_10=='Select'" class="invalid-feedback">
-          <div *ngIf="tmyConfFormGroup.value.pm_10=='Select'">pm_10 is required</div>
+        <div class="form-group">
+          <label for="pm_10">Particulate matter 10</label>
+          <select class="form-control" formControlName="pm_10" id="pm_10"
+            [ngClass]="{ 'is-invalid':submitted && tmyConfFormGroup.value.pm_10=='Select'}">
+            <option disabled>Select</option>
+            <option>true</option>
+            <option>false</option>
+          </select>
+          <div *ngIf="submitted && tmyConfFormGroup.value.pm_10=='Select'" class="invalid-feedback">
+            <div *ngIf="tmyConfFormGroup.value.pm_10=='Select'">Particulate matter 10 is required</div>
+          </div>
         </div>
-      </div>
-      <div class="form-group">
-        <label for="relative_humidity">relative_humidity</label>
-        <input id="relative_humidity" formControlName="relative_humidity" class="form-control"
-          [ngClass]="{ 'is-invalid':submitted && f.relative_humidity.errors }">
-        <div *ngIf="submitted && f.relative_humidity.errors" class="invalid-feedback">
-          <div *ngIf="f.relative_humidity.errors.required">relative_humidity is required</div>
-          <div *ngIf="f.relative_humidity.errors.pattern"> relative_humidity not valid.</div>
+        <div class="form-group">
+          <label for="relative_humidity">Relative Humidity</label>
+          <input id="relative_humidity" formControlName="relative_humidity" class="form-control"
+            [ngClass]="{ 'is-invalid':submitted && f.relative_humidity.errors }">
+          <div *ngIf="submitted && f.relative_humidity.errors" class="invalid-feedback">
+            <div *ngIf="f.relative_humidity.errors.required">Relative Humidity is required</div>
+            <div *ngIf="f.relative_humidity.errors.pattern"> Relative Humidity not valid.</div>
+          </div>
         </div>
-      </div>
-      <div class="form-group">
-        <label for="precipitable_water">precipitable_water</label>
-        <input id="precipitable_water" formControlName="precipitable_water" class="form-control"
-          [ngClass]="{ 'is-invalid':submitted && f.precipitable_water.errors }">
-        <div *ngIf="submitted && f.precipitable_water.errors" class="invalid-feedback">
-          <div *ngIf="f.precipitable_water.errors.required">precipitable_water is required</div>
-          <div *ngIf="f.precipitable_water.errors.pattern"> precipitable_water not valid.</div>
+        <div class="form-group">
+          <label for="precipitable_water">Precipitable Water</label>
+          <input id="precipitable_water" formControlName="precipitable_water" class="form-control"
+            [ngClass]="{ 'is-invalid':submitted && f.precipitable_water.errors }">
+          <div *ngIf="submitted && f.precipitable_water.errors" class="invalid-feedback">
+            <div *ngIf="f.precipitable_water.errors.required">Precipitable Water is required</div>
+            <div *ngIf="f.precipitable_water.errors.pattern"> Precipitable Water not valid.</div>
+          </div>
         </div>
-      </div>
-      <div class="form-group">
-        <label for="wind_direction">wind_direction</label>
-        <input id="wind_direction" formControlName="wind_direction" class="form-control"
-          [ngClass]="{ 'is-invalid':submitted && f.wind_direction.errors }">
-        <div *ngIf="submitted && f.wind_direction.errors" class="invalid-feedback">
-          <div *ngIf="f.wind_direction.errors.required">wind_direction is required</div>
-          <div *ngIf="f.wind_direction.errors.pattern"> wind_direction not valid.</div>
+        <div class="form-group">
+          <label for="wind_direction">Wind Direction</label>
+          <input id="wind_direction" formControlName="wind_direction" class="form-control"
+            [ngClass]="{ 'is-invalid':submitted && f.wind_direction.errors }">
+          <div *ngIf="submitted && f.wind_direction.errors" class="invalid-feedback">
+            <div *ngIf="f.wind_direction.errors.required">Wind Direction is required</div>
+            <div *ngIf="f.wind_direction.errors.pattern"> Wind Direction not valid.</div>
+          </div>
         </div>
-      </div>
-      <div class="form-group">
-        <label for="granularity">granularity</label>
-        <input id="granularity" formControlName="granularity" class="form-control"
-          [ngClass]="{ 'is-invalid':submitted && f.granularity.errors }">
-        <div *ngIf="submitted && f.granularity.errors" class="invalid-feedback">
-          <div *ngIf="f.granularity.errors.required">granularity is required</div>
-          <div *ngIf="f.granularity.errors.pattern"> granularity not valid.</div>
+        <div class="form-group">
+          <label for="granularity">Granularity</label>
+          <input id="granularity" formControlName="granularity" class="form-control"
+            [ngClass]="{ 'is-invalid':submitted && f.granularity.errors }">
+          <div *ngIf="submitted && f.granularity.errors" class="invalid-feedback">
+            <div *ngIf="f.granularity.errors.required">granularity is required</div>
+            <div *ngIf="f.granularity.errors.pattern"> granularity not valid.</div>
+          </div>
         </div>
-      </div>
-      <div class="border text-center">
+  
+      </fieldset>
+            <div class="border text-center">
         <button data-dismiss="modal" class="btn btn-info" (click)="onCreate()">Submit</button>
       </div>
     </form>
@@ -348,7 +366,9 @@
     <button type="button" class="btn btn-outline-dark" (click)="modal.close('Save click')">Close</button>
   </div>
 </ng-template>
+<!-- End create form -->
 
+<!-- Begin details form -->
 <ng-template #contentDetails let-modal>
   <div class="modal-header">
       <h2 class="modal-title" id="modal-basic-title">Configuration details</h2>
@@ -418,7 +438,7 @@
           <hr>
           <div class="row">
             <div class="col-sm-5">
-              <h3 class="mb-0">Tilt</h3>
+              <h3 class="mb-0">PV Tilt</h3>
             </div>
             <div class="col-sm-7 text-secondary font-weight-bold text-right">
               {{ tmyConfDetails.pv_system != null ? tmyConfDetails.pv_system.pv.tilt : "Aucune" }}
@@ -428,7 +448,7 @@
           
           <div class="row">
             <div class="col-sm-5">
-              <h3 class="mb-0">Azimuth</h3>
+              <h3 class="mb-0">PV Azimuth</h3>
             </div>
             <div class="col-sm-7 text-secondary font-weight-bold text-right">
               {{ tmyConfDetails.pv_system != null ? tmyConfDetails.pv_system.pv.azimuth : "Aucune" }}
@@ -438,7 +458,7 @@
           
           <div class="row">
             <div class="col-sm-5">
-              <h3 class="mb-0">Tracker Description</h3>
+              <h3 class="mb-0">PV Tracker Description</h3>
             </div>
             <div class="col-sm-7 text-secondary font-weight-bold text-right">
               {{ tmyConfDetails.pv_system != null ? tmyConfDetails.pv_system.tracker.description : "Aucune" }}
@@ -448,7 +468,7 @@
           
           <div class="row">
             <div class="col-sm-5">
-              <h3 class="mb-0">Ground Covered Ratio (GCR)</h3>
+              <h3 class="mb-0">Ground Covered Ratio (gcr)</h3>
             </div>
             <div class="col-sm-7 text-secondary font-weight-bold text-right">
               {{ tmyConfDetails.pv_system != null ? tmyConfDetails.pv_system.tracker.gcr : "Aucune" }}
@@ -487,7 +507,7 @@
           <hr>
           <div class="row">
             <div class="col-sm-5">
-              <h3 class="mb-0">P50</h3>
+              <h3 class="mb-0">Probability P50</h3>
             </div>
             <div class="col-sm-7 text-secondary font-weight-bold text-right">
               {{ tmyConfDetails.analysis != null ? tmyConfDetails.analysis.probabilities.P50 : "" }}
@@ -497,7 +517,7 @@
           
           <div class="row">
             <div class="col-sm-5">
-              <h3 class="mb-0">P75</h3>
+              <h3 class="mb-0">Probability P75</h3>
             </div>
             <div class="col-sm-7 text-secondary font-weight-bold text-right">
               {{ tmyConfDetails.analysis != null ? tmyConfDetails.analysis.probabilities.P75 : "" }}
@@ -507,7 +527,7 @@
           
           <div class="row">
             <div class="col-sm-5">
-              <h3 class="mb-0">P90</h3>
+              <h3 class="mb-0">Probability P90</h3>
             </div>
             <div class="col-sm-7 text-secondary font-weight-bold text-right">
               {{ tmyConfDetails.analysis != null ? tmyConfDetails.analysis.probabilities.P90 : "" }}
@@ -517,7 +537,7 @@
           
           <div class="row">
             <div class="col-sm-5">
-              <h3 class="mb-0">P10</h3>
+              <h3 class="mb-0">Probability P10</h3>
             </div>
             <div class="col-sm-7 text-secondary font-weight-bold text-right">
               {{ tmyConfDetails.analysis != null ? tmyConfDetails.analysis.probabilities.P10 : "" }}
@@ -527,7 +547,7 @@
           
           <div class="row">
             <div class="col-sm-5">
-              <h3 class="mb-0">P99</h3>
+              <h3 class="mb-0">Probability P99</h3>
             </div>
             <div class="col-sm-7 text-secondary font-weight-bold text-right">
               {{ tmyConfDetails.analysis.probabilities != null ? tmyConfDetails.analysis.probabilities.P99 : "" }}
@@ -546,7 +566,7 @@
           
           <div class="row">
             <div class="col-sm-5">
-              <h3 class="mb-0">PM 2.5</h3>
+              <h3 class="mb-0">Particulate matter 2.5</h3>
             </div>
             <div class="col-sm-7 text-secondary font-weight-bold text-right">
               {{ tmyConfDetails.analysis.meteo_data != null ? tmyConfDetails.analysis.meteo_data.pm_2_5 : "" }}
@@ -556,7 +576,7 @@
           
           <div class="row">
             <div class="col-sm-5">
-              <h3 class="mb-0">PM 10</h3>
+              <h3 class="mb-0">Particulate matter 10</h3>
             </div>
             <div class="col-sm-7 text-secondary font-weight-bold text-right">
               {{ tmyConfDetails.analysis.meteo_data != null ? tmyConfDetails.analysis.meteo_data.pm_10 : "" }}
@@ -607,7 +627,9 @@
         <button type="button" class="btn btn-outline-dark" (click)="modal.close('Save click')">Close</button>
       </div>
 </ng-template>
+<!-- End details form -->
 
+<!-- Begin edit form -->
 <ng-template #contentEdit let-modal>
   <div class="modal-header">
     <h2 class="modal-title" id="modal-basic-title2">Edit Configuration</h2>
@@ -617,250 +639,263 @@
   </div>
   <div class="modal-body" *ngIf="editTmyConfForm">
     <form [formGroup]="editTmyConfForm">
-      <div class="form-group">
-        <label for="project_name">Project Name</label>
-        <input formControlName="project_name" class="form-control"
-          [ngClass]="{ 'is-invalid':submitted && f.project_name.errors }">
-        <div *ngIf="submitted && f.project_name.errors" class="invalid-feedback">
-          <div *ngIf="f.project_name.errors.required">Project Name is required</div>
+      <legend class="w-auto m-2">Project Details</legend>
+      <fieldset class="border border-dark rounded p-2 m-2">
+        <div class="form-group">
+          <label for="project_name">Project Name</label>
+          <input formControlName="project_name" class="form-control"
+            [ngClass]="{ 'is-invalid':submitted && f.project_name.errors }">
+          <div *ngIf="submitted && f.project_name.errors" class="invalid-feedback">
+            <div *ngIf="f.project_name.errors.required">Project Name is required</div>
+          </div>
         </div>
-      </div>
-      <div class="form-group">
-        <label for="latitude">Latitude</label>
-        <input formControlName="latitude" class="form-control"
-          [ngClass]="{ 'is-invalid':submitted && f.latitude.errors }">
-        <div *ngIf="submitted && f.latitude.errors" class="invalid-feedback">
-          <div *ngIf="f.latitude.errors.required">Latitude is required</div>
+      </fieldset>
+      
+      <legend class="w-auto m-2">Location</legend>
+      <fieldset class="border border-dark rounded p-2 m-2">
+        <div class="form-group">
+          <label for="latitude">Latitude</label>
+          <input formControlName="latitude" class="form-control"
+            [ngClass]="{ 'is-invalid':submitted && f.latitude.errors }">
+          <div *ngIf="submitted && f.latitude.errors" class="invalid-feedback">
+            <div *ngIf="f.latitude.errors.required">Latitude is required</div>
+          </div>
         </div>
-      </div>
-      <div class="form-group">
-        <label for="longitude">Longitude</label>
-        <input formControlName="longitude" class="form-control"
-          [ngClass]="{ 'is-invalid':submitted && f.longitude.errors }">
-        <div *ngIf="submitted && f.longitude.errors" class="invalid-feedback">
-          <div *ngIf="f.longitude.errors.required">Longitude is required</div>
-          <div *ngIf="f.longitude.errors.pattern"> Longitude not valid.</div>
+        <div class="form-group">
+          <label for="longitude">Longitude</label>
+          <input formControlName="longitude" class="form-control"
+            [ngClass]="{ 'is-invalid':submitted && f.longitude.errors }">
+          <div *ngIf="submitted && f.longitude.errors" class="invalid-feedback">
+            <div *ngIf="f.longitude.errors.required">Longitude is required</div>
+            <div *ngIf="f.longitude.errors.pattern"> Longitude not valid.</div>
+          </div>
         </div>
-      </div>
-      <div class="form-group">
-        <label for="altitude">Altitude</label>
-        <input formControlName="altitude" class="form-control"
-          [ngClass]="{ 'is-invalid':submitted && f.altitude.errors }">
-        <div *ngIf="submitted && f.altitude.errors" class="invalid-feedback">
-          <div *ngIf="f.altitude.errors.required">Altitude is required</div>
-          <div *ngIf="f.altitude.errors.pattern"> Altitude not valid.</div>
+        <div class="form-group">
+          <label for="altitude">Altitude</label>
+          <input formControlName="altitude" class="form-control"
+            [ngClass]="{ 'is-invalid':submitted && f.altitude.errors }">
+          <div *ngIf="submitted && f.altitude.errors" class="invalid-feedback">
+            <div *ngIf="f.altitude.errors.required">Altitude is required</div>
+            <div *ngIf="f.altitude.errors.pattern"> Altitude not valid.</div>
+          </div>
         </div>
-      </div>
-      <div class="form-group">
-        <label for="pv_description">PV Description</label>
-        <input formControlName="pv_description" class="form-control"
-          [ngClass]="{ 'is-invalid':submitted && f.pv_description.errors }">
-        <div *ngIf="submitted && f.pv_description.errors" class="invalid-feedback">
-          <div *ngIf="f.pv_description.errors.required">PV Description is required</div>
+      </fieldset>
+      <legend class="w-auto m-2">PV System Configuration</legend>
+      <fieldset class="border border-dark rounded p-2 m-2">
+        <div class="form-group">
+          <label for="pv_description">PV Description</label>
+          <input formControlName="pv_description" class="form-control"
+            [ngClass]="{ 'is-invalid':submitted && f.pv_description.errors }">
+          <div *ngIf="submitted && f.pv_description.errors" class="invalid-feedback">
+            <div *ngIf="f.pv_description.errors.required">PV Description is required</div>
+          </div>
         </div>
-      </div>
-      <div class="form-group">
-        <label for="technology">Technology</label>
-        <input  formControlName="technology" class="form-control"
-          [ngClass]="{ 'is-invalid':submitted && f.technology.errors }">
-        <div *ngIf="submitted && f.technology.errors" class="invalid-feedback">
-          <div *ngIf="f.technology.errors.required">Technology is required</div>
+        <div class="form-group">
+          <label for="technology">Technology</label>
+          <input  formControlName="technology" class="form-control"
+            [ngClass]="{ 'is-invalid':submitted && f.technology.errors }">
+          <div *ngIf="submitted && f.technology.errors" class="invalid-feedback">
+            <div *ngIf="f.technology.errors.required">Technology is required</div>
+          </div>
         </div>
-      </div>
-      <div class="form-group">
-        <label for="tilt">PV Tilt</label>
-        <input formControlName="tilt" class="form-control"
-          [ngClass]="{ 'is-invalid':submitted && f.tilt.errors }">
-        <div *ngIf="submitted && f.tilt.errors" class="invalid-feedback">
-          <div *ngIf="f.tilt.errors.required">PV Tilt is required</div>
-          <div *ngIf="f.tilt.errors.pattern"> PV Tilt not valid.</div>
+        <div class="form-group">
+          <label for="tilt">PV Tilt</label>
+          <input formControlName="tilt" class="form-control"
+            [ngClass]="{ 'is-invalid':submitted && f.tilt.errors }">
+          <div *ngIf="submitted && f.tilt.errors" class="invalid-feedback">
+            <div *ngIf="f.tilt.errors.required">PV Tilt is required</div>
+            <div *ngIf="f.tilt.errors.pattern"> PV Tilt not valid.</div>
+          </div>
         </div>
-      </div>
+  
+        <div class="form-group">
+          <label for="azimuth">PV azimuth</label>
+          <input formControlName="azimuth" class="form-control"
+            [ngClass]="{ 'is-invalid':submitted && f.azimuth.errors }">
+          <div *ngIf="submitted && f.azimuth.errors" class="invalid-feedback">
+            <div *ngIf="f.azimuth.errors.required">PV azimuth is required</div>
+            <div *ngIf="f.azimuth.errors.pattern"> PV azimuth not valid.</div>
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="tracker_description"> PV Tracker Description</label>
+          <input  formControlName="tracker_description" class="form-control"
+            [ngClass]="{ 'is-invalid':submitted && f.tracker_description.errors }">
+          <div *ngIf="submitted && f.tracker_description.errors" class="invalid-feedback">
+            <div *ngIf="f.tracker_description.errors.required">PV Tracker Description is required</div>
+            <div *ngIf="f.tracker_description.errors.pattern"> PV Tracker Description not valid.</div>
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="gcr">PV Ground Covered Ratio (gcr)</label>
+          <input formControlName="gcr" class="form-control"
+            [ngClass]="{ 'is-invalid':submitted && f.gcr.errors }">
+          <div *ngIf="submitted && f.gcr.errors" class="invalid-feedback">
+            <div *ngIf="f.gcr.errors.required">PV Ground Covered Ratio (gcr) is required</div>
+            <div *ngIf="f.gcr.errors.pattern"> PV Ground Covered Ratio (gcr) not valid.</div>
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="axis_azimuth">PV Azimuth angle of the tracker axis</label>
+          <input formControlName="axis_azimuth" class="form-control"
+            [ngClass]="{ 'is-invalid':submitted && f.axis_azimuth.errors }">
+          <div *ngIf="submitted && f.axis_azimuth.errors" class="invalid-feedback">
+            <div *ngIf="f.axis_azimuth.errors.required">PV Azimuth angle of the tracker axis is required</div>
+            <div *ngIf="f.axis_azimuth.errors.pattern"> PV Azimuth angle of the tracker axis not valid.</div>
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="max_angle">PV Maximum Rotation Angle</label>
+          <input formControlName="max_angle" class="form-control"
+            [ngClass]="{ 'is-invalid':submitted && f.max_angle.errors }">
+          <div *ngIf="submitted && f.max_angle.errors" class="invalid-feedback">
+            <div *ngIf="f.max_angle.errors.required">PV Maximum Rotation Angle is required</div>
+            <div *ngIf="f.max_angle.errors.pattern"> PV Maximum Rotation Angle not valid.</div>
+          </div>
+        </div>
+      </fieldset>
 
-      <div class="form-group">
-        <label for="azimuth">PV azimuth</label>
-        <input formControlName="azimuth" class="form-control"
-          [ngClass]="{ 'is-invalid':submitted && f.azimuth.errors }">
-        <div *ngIf="submitted && f.azimuth.errors" class="invalid-feedback">
-          <div *ngIf="f.azimuth.errors.required">PV azimuth is required</div>
-          <div *ngIf="f.azimuth.errors.pattern"> PV azimuth not valid.</div>
+      <legend class="w-auto m-2">Analysis Parameters</legend>
+      <fieldset class="border border-dark rounded p-2 m-2">
+        <div class="form-group">
+          <label for="request_id">Request ID</label>
+          <input formControlName="request_id" class="form-control"
+            [ngClass]="{ 'is-invalid':submitted && f.request_id.errors }">
+          <div *ngIf="submitted && f.request_id.errors" class="invalid-feedback">
+            <div *ngIf="f.request_id.errors.required">Request ID is required</div>
+            <div *ngIf="f.request_id.errors.pattern"> Request ID not valid.</div>
+          </div>
         </div>
-      </div>
-      <div class="form-group">
-        <label for="tracker_description"> tracker_description</label>
-        <input  formControlName="tracker_description" class="form-control"
-          [ngClass]="{ 'is-invalid':submitted && f.tracker_description.errors }">
-        <div *ngIf="submitted && f.tracker_description.errors" class="invalid-feedback">
-          <div *ngIf="f.tracker_description.errors.required">PV tracker_description is required</div>
-          <div *ngIf="f.tracker_description.errors.pattern"> PV tracker_description not valid.</div>
+        <div class="form-group">
+          <label for="p50">Probability P50</label>
+          <select class="form-control" formControlName="p50" 
+            [ngClass]="{ 'is-invalid':submitted && tmyConfFormGroup.value.p50=='Select'}">
+            <option disabled>Select</option>
+            <option>true</option>
+            <option>false</option>
+          </select>
+          <div *ngIf="submitted && tmyConfFormGroup.value.p50=='Select'" class="invalid-feedback">
+            <div *ngIf="tmyConfFormGroup.value.p50=='Select'">Probability P50 is required</div>
+          </div>
         </div>
-      </div>
-      <div class="form-group">
-        <label for="gcr">PV gcr</label>
-        <input formControlName="gcr" class="form-control"
-          [ngClass]="{ 'is-invalid':submitted && f.gcr.errors }">
-        <div *ngIf="submitted && f.gcr.errors" class="invalid-feedback">
-          <div *ngIf="f.gcr.errors.required">PV gcr is required</div>
-          <div *ngIf="f.gcr.errors.pattern"> PV gcr not valid.</div>
+        <div class="form-group">
+          <label for="p75">Probability P75</label>
+          <select class="form-control" formControlName="p75" 
+            [ngClass]="{ 'is-invalid':submitted && tmyConfFormGroup.value.p75=='Select'}">
+            <option disabled>Select</option>
+            <option>true</option>
+            <option>false</option>
+          </select>
+          <div *ngIf="submitted && tmyConfFormGroup.value.p75=='Select'" class="invalid-feedback">
+            <div *ngIf="tmyConfFormGroup.value.p75=='Select'">Probability P75 is required</div>
+          </div>
         </div>
-      </div>
-      <div class="form-group">
-        <label for="axis_azimuth">PV axis_azimuth</label>
-        <input formControlName="axis_azimuth" class="form-control"
-          [ngClass]="{ 'is-invalid':submitted && f.axis_azimuth.errors }">
-        <div *ngIf="submitted && f.axis_azimuth.errors" class="invalid-feedback">
-          <div *ngIf="f.axis_azimuth.errors.required">PV axis_azimuth is required</div>
-          <div *ngIf="f.axis_azimuth.errors.pattern"> PV axis_azimuth not valid.</div>
+        <div class="form-group">
+          <label for="p90">Probability P90</label>
+          <select class="form-control" formControlName="p90"
+            [ngClass]="{ 'is-invalid':submitted && tmyConfFormGroup.value.p90=='Select'}">
+            <option disabled>Select</option>
+            <option>true</option>
+            <option>false</option>
+          </select>
+          <div *ngIf="submitted && tmyConfFormGroup.value.p90=='Select'" class="invalid-feedback">
+            <div *ngIf="tmyConfFormGroup.value.p90=='Select'">Probability P90 is required</div>
+          </div>
         </div>
-      </div>
-      <div class="form-group">
-        <label for="max_angle">PV max_angle</label>
-        <input formControlName="max_angle" class="form-control"
-          [ngClass]="{ 'is-invalid':submitted && f.max_angle.errors }">
-        <div *ngIf="submitted && f.max_angle.errors" class="invalid-feedback">
-          <div *ngIf="f.max_angle.errors.required">PV max_angle is required</div>
-          <div *ngIf="f.max_angle.errors.pattern"> PV max_angle not valid.</div>
+        <div class="form-group">
+          <label for="p10">Probability P10</label>
+          <select class="form-control" formControlName="p10" 
+            [ngClass]="{ 'is-invalid':submitted && tmyConfFormGroup.value.p10=='Select'}">
+            <option disabled>Select</option>
+            <option>true</option>
+            <option>false</option>
+          </select>
+          <div *ngIf="submitted && tmyConfFormGroup.value.p10=='Select'" class="invalid-feedback">
+            <div *ngIf="tmyConfFormGroup.value.p10=='Select'">Probability P10 is required</div>
+          </div>
         </div>
-      </div>
-
-      <div class="form-group">
-        <label for="request_id">request_id</label>
-        <input formControlName="request_id" class="form-control"
-          [ngClass]="{ 'is-invalid':submitted && f.request_id.errors }">
-        <div *ngIf="submitted && f.request_id.errors" class="invalid-feedback">
-          <div *ngIf="f.request_id.errors.required">request_id is required</div>
-          <div *ngIf="f.request_id.errors.pattern"> request_id not valid.</div>
+        <div class="form-group">
+          <label for="p99">Probability P99</label>
+          <select class="form-control" formControlName="p99" 
+            [ngClass]="{ 'is-invalid':submitted && tmyConfFormGroup.value.p99=='Select'}">
+            <option disabled>Select</option>
+            <option>true</option>
+            <option>false</option>
+          </select>
+          <div *ngIf="submitted && tmyConfFormGroup.value.p99=='Select'" class="invalid-feedback">
+            <div *ngIf="tmyConfFormGroup.value.p99=='Select'">Probability P99 is required</div>
+          </div>
         </div>
-      </div>
-      <div class="form-group">
-        <label for="p50">P50</label>
-        <select class="form-control" formControlName="p50" 
-          [ngClass]="{ 'is-invalid':submitted && tmyConfFormGroup.value.p50=='Select'}">
-          <option disabled>Select</option>
-          <option>true</option>
-          <option>false</option>
-        </select>
-        <div *ngIf="submitted && tmyConfFormGroup.value.p50=='Select'" class="invalid-feedback">
-          <div *ngIf="tmyConfFormGroup.value.p50=='Select'">p50 is required</div>
+        <div class="form-group">
+          <label for="ambient_temperature">Ambient Temperature</label>
+          <input  formControlName="ambient_temperature" class="form-control"
+            [ngClass]="{ 'is-invalid':submitted && f.ambient_temperature.errors }">
+          <div *ngIf="submitted && f.ambient_temperature.errors" class="invalid-feedback">
+            <div *ngIf="f.ambient_temperature.errors.required">Ambient Temperature is required</div>
+            <div *ngIf="f.ambient_temperature.errors.pattern"> Ambient Temperature not valid.</div>
+          </div>
         </div>
-      </div>
-      <div class="form-group">
-        <label for="p75">P75</label>
-        <select class="form-control" formControlName="p75" 
-          [ngClass]="{ 'is-invalid':submitted && tmyConfFormGroup.value.p75=='Select'}">
-          <option disabled>Select</option>
-          <option>true</option>
-          <option>false</option>
-        </select>
-        <div *ngIf="submitted && tmyConfFormGroup.value.p75=='Select'" class="invalid-feedback">
-          <div *ngIf="tmyConfFormGroup.value.p75=='Select'">p75 is required</div>
+        <div class="form-group">
+          <label for="pm_2_5">Particulate matter 2.5</label>
+          <select class="form-control" formControlName="pm_2_5" 
+            [ngClass]="{ 'is-invalid':submitted && tmyConfFormGroup.value.pm_2_5=='Select'}">
+            <option disabled>Select</option>
+            <option>true</option>
+            <option>false</option>
+          </select>
+          <div *ngIf="submitted && tmyConfFormGroup.value.pm_2_5=='Select'" class="invalid-feedback">
+            <div *ngIf="tmyConfFormGroup.value.pm_2_5=='Select'">Particulate matter 2.5 is required</div>
+          </div>
         </div>
-      </div>
-      <div class="form-group">
-        <label for="p90">P90</label>
-        <select class="form-control" formControlName="p90"
-          [ngClass]="{ 'is-invalid':submitted && tmyConfFormGroup.value.p90=='Select'}">
-          <option disabled>Select</option>
-          <option>true</option>
-          <option>false</option>
-        </select>
-        <div *ngIf="submitted && tmyConfFormGroup.value.p90=='Select'" class="invalid-feedback">
-          <div *ngIf="tmyConfFormGroup.value.p90=='Select'">p90 is required</div>
+        <div class="form-group">
+          <label for="pm_10">Particulate matter 10</label>
+          <select class="form-control" formControlName="pm_10" 
+            [ngClass]="{ 'is-invalid':submitted && tmyConfFormGroup.value.pm_10=='Select'}">
+            <option disabled>Select</option>
+            <option>true</option>
+            <option>false</option>
+          </select>
+          <div *ngIf="submitted && tmyConfFormGroup.value.pm_10=='Select'" class="invalid-feedback">
+            <div *ngIf="tmyConfFormGroup.value.pm_10=='Select'">Particulate matter 10 is required</div>
+          </div>
         </div>
-      </div>
-      <div class="form-group">
-        <label for="p10">P10</label>
-        <select class="form-control" formControlName="p10" 
-          [ngClass]="{ 'is-invalid':submitted && tmyConfFormGroup.value.p10=='Select'}">
-          <option disabled>Select</option>
-          <option>true</option>
-          <option>false</option>
-        </select>
-        <div *ngIf="submitted && tmyConfFormGroup.value.p10=='Select'" class="invalid-feedback">
-          <div *ngIf="tmyConfFormGroup.value.p10=='Select'">p10 is required</div>
+        <div class="form-group">
+          <label for="relative_humidity">Relative Humidity</label>
+          <input  formControlName="relative_humidity" class="form-control"
+            [ngClass]="{ 'is-invalid':submitted && f.relative_humidity.errors }">
+          <div *ngIf="submitted && f.relative_humidity.errors" class="invalid-feedback">
+            <div *ngIf="f.relative_humidity.errors.required">Relative Humidity is required</div>
+            <div *ngIf="f.relative_humidity.errors.pattern"> Relative Humidity not valid.</div>
+          </div>
         </div>
-      </div>
-      <div class="form-group">
-        <label for="p99">P99</label>
-        <select class="form-control" formControlName="p99" 
-          [ngClass]="{ 'is-invalid':submitted && tmyConfFormGroup.value.p99=='Select'}">
-          <option disabled>Select</option>
-          <option>true</option>
-          <option>false</option>
-        </select>
-        <div *ngIf="submitted && tmyConfFormGroup.value.p99=='Select'" class="invalid-feedback">
-          <div *ngIf="tmyConfFormGroup.value.p99=='Select'">p99 is required</div>
+        <div class="form-group">
+          <label for="precipitable_water">Precipitable Water</label>
+          <input  formControlName="precipitable_water" class="form-control"
+            [ngClass]="{ 'is-invalid':submitted && f.precipitable_water.errors }">
+          <div *ngIf="submitted && f.precipitable_water.errors" class="invalid-feedback">
+            <div *ngIf="f.precipitable_water.errors.required">Precipitable Water is required</div>
+            <div *ngIf="f.precipitable_water.errors.pattern"> Precipitable Water not valid.</div>
+          </div>
         </div>
-      </div>
-      <div class="form-group">
-        <label for="ambient_temperature">ambient_temperature</label>
-        <input  formControlName="ambient_temperature" class="form-control"
-          [ngClass]="{ 'is-invalid':submitted && f.ambient_temperature.errors }">
-        <div *ngIf="submitted && f.ambient_temperature.errors" class="invalid-feedback">
-          <div *ngIf="f.ambient_temperature.errors.required">ambient_temperature is required</div>
-          <div *ngIf="f.ambient_temperature.errors.pattern"> ambient_temperature not valid.</div>
+        <div class="form-group">
+          <label for="wind_direction">Wind Direction</label>
+          <input  formControlName="wind_direction" class="form-control"
+            [ngClass]="{ 'is-invalid':submitted && f.wind_direction.errors }">
+          <div *ngIf="submitted && f.wind_direction.errors" class="invalid-feedback">
+            <div *ngIf="f.wind_direction.errors.required">Wind Direction is required</div>
+            <div *ngIf="f.wind_direction.errors.pattern"> Wind Direction not valid.</div>
+          </div>
         </div>
-      </div>
-      <div class="form-group">
-        <label for="pm_2_5">pm_2_5</label>
-        <select class="form-control" formControlName="pm_2_5" 
-          [ngClass]="{ 'is-invalid':submitted && tmyConfFormGroup.value.pm_2_5=='Select'}">
-          <option disabled>Select</option>
-          <option>true</option>
-          <option>false</option>
-        </select>
-        <div *ngIf="submitted && tmyConfFormGroup.value.pm_2_5=='Select'" class="invalid-feedback">
-          <div *ngIf="tmyConfFormGroup.value.pm_2_5=='Select'">pm_2_5 is required</div>
+        <div class="form-group">
+          <label for="granularity">granularity</label>
+          <input  formControlName="granularity" class="form-control"
+            [ngClass]="{ 'is-invalid':submitted && f.granularity.errors }">
+          <div *ngIf="submitted && f.granularity.errors" class="invalid-feedback">
+            <div *ngIf="f.granularity.errors.required">granularity is required</div>
+            <div *ngIf="f.granularity.errors.pattern"> granularity not valid.</div>
+          </div>
         </div>
-      </div>
-      <div class="form-group">
-        <label for="pm_10">pm_10</label>
-        <select class="form-control" formControlName="pm_10" 
-          [ngClass]="{ 'is-invalid':submitted && tmyConfFormGroup.value.pm_10=='Select'}">
-          <option disabled>Select</option>
-          <option>true</option>
-          <option>false</option>
-        </select>
-        <div *ngIf="submitted && tmyConfFormGroup.value.pm_10=='Select'" class="invalid-feedback">
-          <div *ngIf="tmyConfFormGroup.value.pm_10=='Select'">pm_10 is required</div>
-        </div>
-      </div>
-      <div class="form-group">
-        <label for="relative_humidity">relative_humidity</label>
-        <input  formControlName="relative_humidity" class="form-control"
-          [ngClass]="{ 'is-invalid':submitted && f.relative_humidity.errors }">
-        <div *ngIf="submitted && f.relative_humidity.errors" class="invalid-feedback">
-          <div *ngIf="f.relative_humidity.errors.required">relative_humidity is required</div>
-          <div *ngIf="f.relative_humidity.errors.pattern"> relative_humidity not valid.</div>
-        </div>
-      </div>
-      <div class="form-group">
-        <label for="precipitable_water">precipitable_water</label>
-        <input  formControlName="precipitable_water" class="form-control"
-          [ngClass]="{ 'is-invalid':submitted && f.precipitable_water.errors }">
-        <div *ngIf="submitted && f.precipitable_water.errors" class="invalid-feedback">
-          <div *ngIf="f.precipitable_water.errors.required">precipitable_water is required</div>
-          <div *ngIf="f.precipitable_water.errors.pattern"> precipitable_water not valid.</div>
-        </div>
-      </div>
-      <div class="form-group">
-        <label for="wind_direction">wind_direction</label>
-        <input  formControlName="wind_direction" class="form-control"
-          [ngClass]="{ 'is-invalid':submitted && f.wind_direction.errors }">
-        <div *ngIf="submitted && f.wind_direction.errors" class="invalid-feedback">
-          <div *ngIf="f.wind_direction.errors.required">wind_direction is required</div>
-          <div *ngIf="f.wind_direction.errors.pattern"> wind_direction not valid.</div>
-        </div>
-      </div>
-      <div class="form-group">
-        <label for="granularity">granularity</label>
-        <input  formControlName="granularity" class="form-control"
-          [ngClass]="{ 'is-invalid':submitted && f.granularity.errors }">
-        <div *ngIf="submitted && f.granularity.errors" class="invalid-feedback">
-          <div *ngIf="f.granularity.errors.required">granularity is required</div>
-          <div *ngIf="f.granularity.errors.pattern"> granularity not valid.</div>
-        </div>
-      </div>
+      </fieldset>
       <div class="border text-center">
         <button data-dismiss="modal" class="btn btn-info" (click)="onUpdate()">Save</button>
       </div>
@@ -870,7 +905,9 @@
     <button type="button" class="btn btn-outline-dark" (click)="modal.close('Save click')">Close</button>
   </div>
 </ng-template>
+<!-- End update form -->
 
+<!-- Begin delete form -->
 <ng-template #contentDelete let-modal>
   <div class="modal-header">
     <h4 class="modal-title">Confirm Delete</h4>
@@ -888,3 +925,4 @@
     <button type="button" class="btn btn-outline-dark" (click)="modal.close('Save click')">Cancel</button>
   </div>
 </ng-template>
+<!-- End delete form -->

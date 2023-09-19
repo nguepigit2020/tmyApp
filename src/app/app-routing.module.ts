@@ -4,12 +4,11 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 
 const routes: Routes = [
-  {path:'', component: DefaultComponent},
- {path: '',redirectTo : '', pathMatch: 'full'},
+  {path: '',redirectTo : '', pathMatch: 'full'},
  
  { path: '', component: DefaultComponent,
   children:[
-    //{path: '',component: DashadminComponent},
+    {path: '',component: TmyconfComponent},
     {path: 'tmyconf',component: TmyconfComponent},
     ]
   },

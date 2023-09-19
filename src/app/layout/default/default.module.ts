@@ -20,6 +20,7 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { ComponentModule } from 'src/app/component/component.module';
 import { TmyconfComponent } from 'src/app/modules/tmyconf/tmyconf.component';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { Ng2SearchPipeModule } from 'ng2-search-filter';
 
 
@@ -51,6 +52,7 @@ import { Ng2SearchPipeModule } from 'ng2-search-filter';
     HttpClientModule,
     NgbModule,
     FlexLayoutModule,
+    MatProgressSpinnerModule,
     //Ng2SearchPipeModule,
   ]
 })

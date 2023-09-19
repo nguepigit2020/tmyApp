@@ -9,176 +9,8 @@ import { ModalDismissReasons, NgbModal } from '@ng-bootstrap/ng-bootstrap';
   styleUrls: ['./tmyconf.component.scss']
 })
 export class TmyconfComponent implements OnInit {
-  tmyConfigurationList: any = [
-    {
-        "analysis": {
-            "granularity": "5.2",
-            "meteo_data": {
-                "ambient_temperature": true,
-                "pm_10": false,
-                "pm_2_5": false,
-                "precipitable_water": false,
-                "relative_humidity": false,
-                "wind_direction": true
-            },
-            "probabilities": {
-                "P10": false,
-                "P50": true,
-                "P75": false,
-                "P90": false,
-                "P99": true
-            },
-            "request_id": "121"
-        },
-        "id": 1,
-        "location": {
-            "altitude": 0,
-            "latitude": 10.9999,
-            "longitude": 140.247336
-        },
-        "project_name": "TMY Nguepi Nguefack",
-        "pv_system": {
-            "pv": {
-                "azimuth": 11.08,
-                "description": "jjeje",
-                "tilt": 10.0
-            },
-            "technology": "yyyy",
-            "tracker": {
-                "axis_azimuth": 10.25,
-                "description": "This is for test pupose",
-                "gcr": 13.1,
-                "max_angle": 64.5
-            }
-        }
-    },
-    {
-        "analysis": {
-            "granularity": "5.2",
-            "meteo_data": {
-                "ambient_temperature": true,
-                "pm_10": true,
-                "pm_2_5": true,
-                "precipitable_water": false,
-                "relative_humidity": false,
-                "wind_direction": true
-            },
-            "probabilities": {
-                "P10": false,
-                "P50": true,
-                "P75": false,
-                "P90": false,
-                "P99": true
-            },
-            "request_id": "11"
-        },
-        "id": 2,
-        "location": {
-            "altitude": 0,
-            "latitude": 10.9999,
-            "longitude": 140.247336
-        },
-        "project_name": "TMY Nguepi",
-        "pv_system": {
-            "pv": {
-                "azimuth": 11.08,
-                "description": "jjeje",
-                "tilt": 10.0
-            },
-            "technology": "yyyy",
-            "tracker": {
-                "axis_azimuth": 10.25,
-                "description": "This is for test pupose",
-                "gcr": 10.1,
-                "max_angle": 64.5
-            }
-        }
-    },
-    {
-        "analysis": {
-            "granularity": "5.2",
-            "meteo_data": {
-                "ambient_temperature": true,
-                "pm_10": false,
-                "pm_2_5": false,
-                "precipitable_water": false,
-                "relative_humidity": false,
-                "wind_direction": true
-            },
-            "probabilities": {
-                "P10": false,
-                "P50": true,
-                "P75": false,
-                "P90": false,
-                "P99": true
-            },
-            "request_id": "121"
-        },
-        "id": 3,
-        "location": {
-            "altitude": 0,
-            "latitude": 10.9999,
-            "longitude": 140.247336
-        },
-        "project_name": "TMY Nguepi",
-        "pv_system": {
-            "pv": {
-                "azimuth": 11.08,
-                "description": "jjeje",
-                "tilt": 10.0
-            },
-            "technology": "yyyy",
-            "tracker": {
-                "axis_azimuth": 10.25,
-                "description": "This is for test pupose",
-                "gcr": 10.1,
-                "max_angle": 64.5
-            }
-        }
-    },
-    {
-        "analysis": {
-            "granularity": "5.2",
-            "meteo_data": {
-                "ambient_temperature": true,
-                "pm_10": false,
-                "pm_2_5": false,
-                "precipitable_water": false,
-                "relative_humidity": false,
-                "wind_direction": true
-            },
-            "probabilities": {
-                "P10": false,
-                "P50": true,
-                "P75": false,
-                "P90": false,
-                "P99": true
-            },
-            "request_id": "121"
-        },
-        "id": 4,
-        "location": {
-            "altitude": 0,
-            "latitude": 10.9999,
-            "longitude": 140.247336
-        },
-        "project_name": "TMY Nguepi",
-        "pv_system": {
-            "pv": {
-                "azimuth": 11.08,
-                "description": "jjeje",
-                "tilt": 10.0
-            },
-            "technology": "gggggg",
-            "tracker": {
-                "axis_azimuth": 10.25,
-                "description": "This is for test pupose",
-                "gcr": 13.1,
-                "max_angle": 64.5
-            }
-        }
-    }
-];
+  tmyConfigurationList: any = [];
+  isLoaded: boolean = false
   editTmyConfForm: any;
   tmyConfFormGroup: any;
   submitted: boolean = false;
@@ -212,7 +44,7 @@ export class TmyconfComponent implements OnInit {
             axis_azimuth: ['',Validators.required],
             max_angle: ['',Validators.required],
             request_id: ['',Validators.required],
-            
+
             p50: ['',Validators.required],
             p75: ['Select',Validators.required],
             p90: ['Select',Validators.required],
@@ -266,7 +98,7 @@ export class TmyconfComponent implements OnInit {
   OnGetAllConfigurations(){
     this.serviceTmyconf.getAllTmyConf().subscribe((data:any)=>{
       this.tmyConfigurationList = data;
-      console.log(this.tmyConfigurationList)
+      this.isLoaded = true
     })
   }
 
@@ -294,12 +126,10 @@ export class TmyconfComponent implements OnInit {
 
   //Cette methode nous permet de soumettre le formulaire
   onCreate( ) {
-    console.log(this.tmyConfFormGroup.value)
      this.submitted = true;
 
          // stop here if the form is invalid
          if (this.tmyConfFormGroup.invalid) {
-          console.log("This invalid")
              return;
          }
      this.serviceTmyconf.postTmyConf (this.tmyConfFormGroup.value).subscribe((resp:any) => {
@@ -318,7 +148,6 @@ export class TmyconfComponent implements OnInit {
 
 //Cette methode permet de souvegarder la mise à jour faite sur une configuration
 onUpdate(){
-   console.log("good one",this.editTmyConfForm.value)
    this.serviceTmyconf.upDateTmyConf(this.editTmyConfForm.value).subscribe((resp:any) => {
      this.serviceTmyconf.showNotification(resp.message,'success');
        this.ngOnInit();
@@ -426,17 +255,5 @@ openDetails(targetModal: any, tmyCong: any) {
    });
  }
  
-//Cette methode permet de convertir le birthDate du format json au format yyyy-mm-dd
-_converDate(date:any){
-  if(date.month.toString().length == 1 && date.day.toString().length != 1){
-    date = date.year + '-0' + date.month +'-'+ date.day ;
-  }else if(date.month.toString().length != 1 && date.day.toString().length == 1){
-    date = date.year +'-'+ date.month + '-0' + date.day;
-  }else if(date.month.toString().length == 1 && date.day.toString().length == 1){
-    date = date.year + '-0' + date.month + '-0' + date.day;
-  }else{
-    date = date.year+ '-' + date.month + '-' + date.day;
-  }
-  return date;
-}
+
 }
