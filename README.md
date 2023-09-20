@@ -4,7 +4,7 @@ This project was generated with [Angular CLI](https://github.com/angular/angular
 
 ## Clone the repository using the following commands:
 ```
-git clone url_remote_repository
+git clone https://github.com/nguepigit2020/tmyApp.git
 
 cd tmyApp
 ```
