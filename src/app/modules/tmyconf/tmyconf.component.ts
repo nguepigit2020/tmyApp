@@ -211,6 +211,7 @@ openDetails(targetModal: any, tmyCong: any) {
  
  //Methode pour ouvrir le formulaire de modification d'une configuration.
  openEdit(targetModal: any, tmyCong: any) {
+   this.submitted = false
    this.modalService.open(targetModal, {
     centered: true,
     backdrop: 'static',
